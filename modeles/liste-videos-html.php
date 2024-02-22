@@ -124,10 +124,12 @@ class modele_video {
 
         $mysqli = self::connecter();
 
+        $categories_str = implode(";", $categories);
+
         // Création d'une requête préparée
         if ($requete = $mysqli->prepare("INSERT INTO videos(img_url, nom, description, categories, auteur_nom, auteur_description, auteur_verifie, datePublication, duree, nombreVues, score, sousTitres) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
 
-        $requete->bind_param("ssssssdsdiis", $img_url, $nom, $description, $categories, $auteur_nom, $auteur_description, $auteur_verifie, $datePublication, $duree, $nombreVues, $score, $sousTitres);
+        $requete->bind_param("ssssssdsdiis", $img_url, $nom, $description, $categories_str, $auteur_nom, $auteur_description, $auteur_verifie, $datePublication, $duree, $nombreVues, $score, $sousTitres);
 
         if($requete->execute()) { // Exécution de la requête
             $resultat->message = "Vidéo ajouté"; // Message ajouté dans la page en cas d'ajout réussi
@@ -156,10 +158,12 @@ class modele_video {
 
         $mysqli = self::connecter();
 
+        $categories_str = implode(";", $categories);
+
         // Création d'une requête préparée
         if ($requete = $mysqli->prepare("UPDATE videos SET img_url=?, nom=?, description=?, categories=?, auteur_nom=?, auteur_description=?, auteur_verifie=?, datePublication=?, duree=?, nombreVues=?, score=?, sousTitres=? WHERE id=?")) {
 
-        $requete->bind_param("ssssssdsdiisi", $img_url, $nom, $description, $categories, $auteur_nom, $auteur_description, $auteur_verifie, $datePublication, $duree, $nombreVues, $score, $sousTitres, $id);
+        $requete->bind_param("ssssssdsdiisi", $img_url, $nom, $description, $categories_str, $auteur_nom, $auteur_description, $auteur_verifie, $datePublication, $duree, $nombreVues, $score, $sousTitres, $id);
 
         if($requete->execute()) { // Exécution de la requête
             $resultat->message = "Vidéo modifié"; // Message ajouté dans la page en cas de modification réussi
