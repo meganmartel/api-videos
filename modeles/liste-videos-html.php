@@ -157,13 +157,12 @@ class modele_video {
         $resultat = new stdClass();
 
         $mysqli = self::connecter();
-
-        $categories_str = implode(";", $categories);
+        
 
         // Création d'une requête préparée
         if ($requete = $mysqli->prepare("UPDATE videos SET img_url=?, nom=?, description=?, categories=?, auteur_nom=?, auteur_description=?, auteur_verifie=?, datePublication=?, duree=?, nombreVues=?, score=?, sousTitres=? WHERE id=?")) {
 
-        $requete->bind_param("ssssssdsdiisi", $img_url, $nom, $description, $categories_str, $auteur_nom, $auteur_description, $auteur_verifie, $datePublication, $duree, $nombreVues, $score, $sousTitres, $id);
+        $requete->bind_param("ssssssdsdiisi", $img_url, $nom, $description, $categories, $auteur_nom, $auteur_description, $auteur_verifie, $datePublication, $duree, $nombreVues, $score, $sousTitres, $id);
 
         if($requete->execute()) { // Exécution de la requête
             $resultat->message = "Vidéo modifié"; // Message ajouté dans la page en cas de modification réussi
